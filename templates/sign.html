@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{petition.title}}{% enblock %}
+
+{% block body %}
+<h1>{{petition.title}}</h1>
+
+<h2>Petitionstext</h2>
+{{petition.text}}
+
+<h2>Ja, ich unterschreibe</h2>
+<form method='post' action=''>
+    {{form.as_p()}}
+    <button value='send' type='submit'>Absenden</button>
+</form>
+
+{% endblock %}

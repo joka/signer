@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+Du hast eine Mail bekommen... Bitte klicke auf den Link in der Mail oder tippe den Code hier ein.
+
+<form method='post' action=''>
+    {{form.as_p()}}
+    <button value='send' type='submit'>Absenden</button>
+</form>

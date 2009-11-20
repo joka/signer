@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<p>
+Hallo {{signature.name}} -
+der Bestätigungslink wurde bereits zuvor geklickt, deine Unterschrift ist also bereits gezählt.
+</p>
+
+<p>
+<a href="{{signature.petition.get_url}}">Zurück zur Petition {{signature.petition.title}}</a>
+</p>
+
+{% endblock %}

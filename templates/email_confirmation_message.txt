@@ -9,10 +9,10 @@ hat, mit deiner Email-Adresse nochmals teilzunehmen.
 um die Teilnahme an der Petition {{signature.petition.title}} zu
 vervollständigen, klicke bitte auf den folgenden Link:
 
-{{signature.make_confirmation_link}}
+{{signature.show_confirmation_url}}
 
 {% ifequal email_type EMAIL_TYPES.ALREADY_SIGNED %}
-Du hattest bisher noch nicht unterschrieben.
+Anmerkung: Du hattest mit der selben Email-Adresse zuvor bereits unterschrieben, jedoch noch nicht den Bestätigungslink angeklickt.
 {% endifequal %}
 
 {% endifequal %}

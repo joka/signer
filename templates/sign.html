@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{petition.title}}{% enblock %}
+{% block title %}{{petition.title}}{% endblock %}
 
 {% block body %}
 <h1>{{petition.title}}</h1>
@@ -9,7 +9,7 @@
 
 <h2>Ja, ich unterschreibe</h2>
 <form method='post' action=''>
-    {{form.as_p()}}
+    {{form.as_p}}
     <button value='send' type='submit'>Absenden</button>
 </form>
 

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
+from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from signer.models import Petition, Signature, AlreadyConfirmed
 
@@ -19,10 +21,9 @@ EMAIL_TYPES = dict(
     )
 
 
-def signer(request, petition_name):
+def sign(request, petition_name):
 
     petition = get_object_or_404(Petition, short_name=petition_name)
-
 
     if request.method == 'POST':
 
@@ -33,8 +34,8 @@ def signer(request, petition_name):
             email_address = form.cleaned_data['email_address']
 
             try:
-                signature = Petition.objects.get(petition=petition, email_address=email_address)
-                if signature.is_verified():
+                signature = Signature.objects.get(petition=petition, email_address=email_address)
+                if signature.verified:
                     # this is the case if a user has already participated and confirmed
 
                     email_type = EMAIL_TYPES['ALREADY_SIGNED_AND_CONFIRMED']
@@ -48,7 +49,7 @@ def signer(request, petition_name):
                 # this is the default case: user signs the petition for the first time
 
                 # generate confirmation code
-                confirmation_code = Signature.create_unique_code()
+                confirmation_code = Signature.create_confirm_code(email_address)
                 signature = Signature(confirmation_code=confirmation_code, petition=petition)
 
                 email_type = EMAIL_TYPES['NOT_YET_SIGNED']
@@ -58,10 +59,13 @@ def signer(request, petition_name):
 
             context = {
                 'signature': signature,
-                'repeated': repeated,
                 'email_type': email_type,
                 'EMAIL_TYPES': EMAIL_TYPES,
-                })
+                }
+
+
+            form = SignatureForm(request.POST, instance=signature)
+            form.save()
 
             subject = render_to_string('email_confirmation_subject.txt', context)
             subject = "".join(subject.splitlines())
@@ -71,11 +75,9 @@ def signer(request, petition_name):
                     [email_address])
 
 
-            form = SignatureForm(instance=signature)
-            form.save()
-
-
-            return render_to_response('confirm.html')
+            return render_to_response('confirm.html', {
+                'signature': signature,
+                })
 
         else: # invalid form
             return render_to_response('sign.html', {
@@ -95,15 +97,22 @@ def signer(request, petition_name):
 def confirm(request):
 
     confirmation_code = request.GET['code']
-    try:
-        Signature.confirm_email(confirmation_code)
+    signature = get_object_or_404(Signature, confirmation_code=confirmation_code)
 
-    except AlreadyConfirmed:
-        raise NotYetImplemented
-    except Signature.DoesNotExist:
-        raise NotYetImplemented
+    if signature.verified:
+        return render_to_response('already_confirmed.html', {
+            'signature': signature,
+            })
+    else:
+        signature.verified = True
+        signature.save()
+        return render_to_response('thanks.html', {
+            'signature': signature,
+            })
 
 
-
-def list_signatures(request):
-    raise NotYetImplemented
+def list(request, petition_name):
+    petition = get_object_or_404(Petition, short_name=petition_name)
+    return render_to_response('list.html', {
+        'petition': petition
+        })

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<p>
+Hallo {{signature.name}} -
+</p>
+<p>
+Danke für die Teilnahme an der Petition {{signature.petition.title}}!
+</p>
+
+<p>
+<a href="{{signature.petition.get_url}}">Zurück zur Petition {{signature.petition.title}}</a>
+</p>
+
+{% endblock %}

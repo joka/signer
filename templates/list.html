@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<h2>Petition {{petition.title}}</h2>
+
+<h3>Liste der Unterzeichner_innen</h3>
+<ul>
+{% for signature in petition.get_signatures %}
+<li> {{ signature.name }} </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+

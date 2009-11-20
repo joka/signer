@@ -1,12 +1,1 @@
-Liebe/r {{signature.name}} -
-
-um die Teilnahme an der Petition {{signature.petition.title}} zu
-vervollständigen, klicke bitte auf den folgenden Link:
-
-{{signature.make_confirmation_link}}
-
-{% if repeated %}
-Du hattest bisher noch nicht unterschrieben.
-{% endif %}
-
-
+Bitte bestätige die Teilnahme an der Petition {{signature.petition.title}}

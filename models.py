@@ -3,6 +3,7 @@
 from random import random
 
 from django.db import models
+from django.conf import settings
 from django.utils.hashcompat import sha_constructor
 
 
@@ -19,6 +20,12 @@ class Petition(models.Model):
     text = models.TextField()
     # adressat
     # faq_datenschutz = models.TextField() # what is the email address used for
+
+    def get_url(self):
+        return 'http://%s/sign/%s'%self.short_name
+
+    def get_signatures(self):
+        return self.all_signatures.filter(verified=True)
 
 
 class Signature(models.Model):
@@ -39,25 +46,17 @@ class Signature(models.Model):
 
     newsletter = models.BooleanField(blank=True, default=True)
 
-    petition = models.ForeignKey('Petition', editable=False)
+    petition = models.ForeignKey('Petition', editable=False, related_name='all_signatures')
     confirmation_code = models.CharField(editable=False, null=True, unique=True, max_length=32)
     verified = models.BooleanField(editable=False, default=False)
 
-    def create_confirm_code(cls):
+    @classmethod
+    def create_confirm_code(cls, email_address):
         salt = sha_constructor(str(random())).hexdigest()[:5]
-        return sha_constructor(salt + email_address.email).hexdigest()
+        return sha_constructor(salt + email_address).hexdigest()
 
-    def confirm_email(cls, confirmation_code):
-        signature = self.get(confirmation_code=confirmation_code)
-        if signature.verifed:
-            raise AlreadyConfirmed
-        signature.verified = True
-        signature.save()
-        return signature
-
-
-    def show_confirmation_link(self):
-        raise NotYetImplemented
+    def show_confirmation_url(self):
+        return 'http://%s/confirm?code=%s'%(settings.BASE_URL, self.confirmation_code)
 
     class Meta:
         unique_together = (('email_address', 'petition'))

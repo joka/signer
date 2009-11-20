@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{petition.title}}{% endblock %}
+
+{% block body %}
+<h1>{{petition.title}}</h1>
+
+<h2>Petitionstext</h2>
+<p>
+{{petition.text}}
+</p>
+
+<p>
+<a href="sign">Ja - ich unterschreibe!</a>
+</p>
+
+
+{% endblock %}

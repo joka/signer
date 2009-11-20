@@ -20,9 +20,15 @@ EMAIL_TYPES = dict(
     ALREADY_SIGNED_AND_CONFIRMED = 2,
     )
 
+def show(request, petition_name):
+    petition = get_object_or_404(Petition, short_name=petition_name)
+    return render_to_response('show.html', {
+        'petition': petition,
+        })
+
+
 
 def sign(request, petition_name):
-
     petition = get_object_or_404(Petition, short_name=petition_name)
 
     if request.method == 'POST':

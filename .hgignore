@@ -7,6 +7,7 @@ syntax: glob
 *.orig
 localsettings.py
 test.db
+example_project/test.db
 
 # switch to regexp syntax.
 syntax: regexp

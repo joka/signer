@@ -63,7 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'signer.example_project.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -80,5 +80,8 @@ INSTALLED_APPS = (
     'signer',
 )
 
+# signer
+EMAIL_HOST = 'localhost'
+BASE_URL = 'localhost:8000/signer'
 
-from localsettings import *
+#from localsettings import *

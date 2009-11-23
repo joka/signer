@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{petition.title}}{% endblock %}
+
+{% block body %}
+
+<h2>Es gibt folgende Petitionen</h2>
+
+<ul>
+{% for petition in petitions %}
+<li><a href="{{petition.get_url}}">{{petition.title}}</a></li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}

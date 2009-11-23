@@ -1,5 +1,13 @@
 from django.contrib import admin
 from signer.models import Petition, Signature
 
-for cls in [Petition, Signature]:
-    admin.site.register(cls)
+class PetitionAdmin(admin.ModelAdmin):
+    list_display = ('short_name', 'title')
+
+admin.site.register(Petition, PetitionAdmin)
+
+# don't put signature in admin interface because of privacy
+
+#for cls in [Signature]:
+    #admin.site.register(cls)
+

@@ -4,6 +4,8 @@
 {% block body %}
 <h1>{{petition.title}}</h1>
 
+Anzahl Unterschriften: {{petition.number_signatures}}
+
 <h2>Ja, ich unterschreibe</h2>
 <form method='post' action=''>
     {{form.as_p}}
@@ -11,7 +13,7 @@
 </form>
 
 <h2>Petitionstext</h2>
-{{petition.text}}
+{{petition.text|safe}}
 
 
 {% endblock %}

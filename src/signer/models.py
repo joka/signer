@@ -22,10 +22,13 @@ class Petition(models.Model):
     # faq_datenschutz = models.TextField() # what is the email address used for
 
     def get_url(self):
-        return 'http://%s/sign/%s'%self.short_name
+        return 'http://%s/%s/'%(settings.BASE_URL, self.short_name)
 
     def get_signatures(self):
         return self.all_signatures.filter(verified=True)
+
+    def number_signatures(self):
+        return self.get_signatures().count()
 
 
 class Signature(models.Model):

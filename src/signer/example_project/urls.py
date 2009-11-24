@@ -11,6 +11,9 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
+    )
 
-    (r'^signer/', include('signer.urls')),
-)
+from signer.urls import urlpatterns as signer_urlpatterns
+
+urlpatterns += signer_urlpatterns
+

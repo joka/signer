@@ -4,15 +4,17 @@
 {% block body %}
 <h1>{{petition.title}}</h1>
 
-<h2>Petitionstext</h2>
-<p>
-{{petition.text}}
-
-</p>
+Anzahl Unterschriften: {{petition.number_signatures}}
 
 <p>
 <a href="sign">Ja - ich unterschreibe!</a>
 </p>
+
+<h2>Petitionstext</h2>
+<p>
+{{petition.text|safe}}
+</p>
+
 
 
 {% endblock %}

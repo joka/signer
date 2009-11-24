@@ -84,4 +84,7 @@ INSTALLED_APPS = (
 EMAIL_HOST = 'localhost'
 BASE_URL = 'localhost:8000/signer'
 
-#from localsettings import *
+try:
+    from localsettings import *
+except ImportError:
+    pass

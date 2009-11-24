@@ -8,6 +8,15 @@ syntax: glob
 localsettings.py
 test.db
 example_project/test.db
+# python egg stuff
+bin
+dist
+eggs
+*.egg-info
+.installed.cfg
+develop-eggs
+parts
 
 # switch to regexp syntax.
 syntax: regexp
+

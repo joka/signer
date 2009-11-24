@@ -2,14 +2,15 @@
 
 {% block body %}
 
-<p>
-Hallo {{signature.name}} -
-</p>
-<p>
-Danke für die Teilnahme an der Petition {{signature.petition.title}}!
-</p>
 
-<p>
+<div class="flash notice">
+<p class="message">
+Hallo {{signature.name}} -
+Danke für die Teilnahme an der Petition {{signature.petition.title}}!
+</p>    flash info
+</div>
+
+<p id="back">
 <a href="{{signature.petition.get_url}}">Zurück zur Petition {{signature.petition.title}}</a>
 </p>
 

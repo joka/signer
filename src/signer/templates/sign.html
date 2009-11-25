@@ -7,7 +7,7 @@
 Anzahl Unterschriften: {{petition.number_signatures}}
 
 <h2>Ja, ich unterschreibe</h2>
-<form method='post' action=''>
+<form method='post' action='{{petition.get_url}}sign/'>
     {{form.as_p}}
     <button value='send' type='submit'>Absenden</button>
 </form>

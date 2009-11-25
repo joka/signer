@@ -4,10 +4,16 @@
 {% block body %}
 <h1>{{petition.title}}</h1>
 
+<p>
 Anzahl Unterschriften: {{petition.number_signatures}}
+</p>
 
 <p>
-<a href="{{petition.get_url}}sign/">Ja - ich unterschreibe!</a>
+<a href="{{petition.get_absolute_url}}list/">Unterschriften anschauen</a>
+</p>
+
+<p>
+<a href="{{petition.get_absolute_url}}sign/">Ja - ich unterschreibe!</a>
 </p>
 
 <h2>Petitionstext</h2>
@@ -15,6 +21,19 @@ Anzahl Unterschriften: {{petition.number_signatures}}
 {{petition.text|safe}}
 </p>
 
+
+<div id="metainfos">
+    {% if petition.start_date %}
+    <p>Startdatum: {{petition.start_date|date}}</p>
+    {% endif %}
+    {% if petition.end_date %}
+    <p>Enddatum: {{petition.end_date}}</p>
+    {% endif %}
+    {% if petition.datenschutz %}
+    <h2>Datenschutzbedingungen:</h2>
+    {{petition.datenschutz}}
+    {% endif %}
+</div>
 
 
 {% endblock %}

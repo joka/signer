@@ -7,7 +7,7 @@
 
 <ul>
 {% for petition in petitions %}
-<li><a href="{{petition.get_url}}">{{petition.title}}</a></li>
+<li><a href="{{petition.get_absolute_url}}">{{petition.title}}</a></li>
 {% endfor %}
 </ul>
 

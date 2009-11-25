@@ -4,6 +4,7 @@ from django import forms
 from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
+from django.template import RequestContext
 from django.core.mail import send_mail
 from signer.models import Petition, Signature, AlreadyConfirmed
 
@@ -24,7 +25,7 @@ EMAIL_TYPES = dict(
 def show_petition_list(request):
     return render_to_response('petitionlist.html', {
         'petitions': Petition.objects.all(),
-        })
+        }, context_instance=RequestContext(request))
 
 
 
@@ -32,7 +33,7 @@ def show(request, petition_name):
     petition = get_object_or_404(Petition, short_name=petition_name)
     return render_to_response('show.html', {
         'petition': petition,
-        })
+        }, context_instance=RequestContext(request))
 
 
 
@@ -91,13 +92,13 @@ def sign(request, petition_name):
 
             return render_to_response('confirm.html', {
                 'signature': signature,
-                })
+                }, context_instance=RequestContext(request))
 
         else: # invalid form
             return render_to_response('sign.html', {
                 'petition': petition,
                 'form': form,
-                })
+                }, context_instance=RequestContext(request))
 
     else:
         form = SignatureForm()
@@ -105,7 +106,7 @@ def sign(request, petition_name):
         return render_to_response('sign.html', {
             'petition': petition,
             'form': form,
-            })
+            }, context_instance=RequestContext(request))
 
 
 def confirm(request):
@@ -116,17 +117,17 @@ def confirm(request):
     if signature.verified:
         return render_to_response('already_confirmed.html', {
             'signature': signature,
-            })
+            }, context_instance=RequestContext(request))
     else:
         signature.verified = True
         signature.save()
         return render_to_response('thanks.html', {
             'signature': signature,
-            })
+            }, context_instance=RequestContext(request))
 
 
 def list(request, petition_name):
     petition = get_object_or_404(Petition, short_name=petition_name)
     return render_to_response('list.html', {
         'petition': petition
-        })
+        }, context_instance=RequestContext(request))

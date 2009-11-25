@@ -17,11 +17,16 @@ class Petition(models.Model):
     title = models.CharField(max_length=200)
     short_name = models.CharField(max_length=20)
 
+    abstract = models.TextField(blank=True)
     text = models.TextField()
-    # adressat
-    # faq_datenschutz = models.TextField() # what is the email address used for
 
-    def get_url(self):
+    start_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True)
+
+    # adressat
+    datenschutz = models.TextField(blank=True, null=True) # what is the email address used for
+
+    def get_absolute_url(self):
         return 'http://%s/%s/'%(settings.BASE_URL, self.short_name)
 
     def get_signatures(self):
@@ -40,7 +45,8 @@ class Signature(models.Model):
 
     name = models.CharField(max_length=100)
     email_address = models.EmailField(max_length=100)
-    comment = models.TextField(blank=True)
+    
+    # comment = models.TextField(blank=True)
 
     # school
     # position

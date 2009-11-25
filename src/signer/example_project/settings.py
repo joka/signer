@@ -10,7 +10,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'test.db'             # Or path to database file if using sqlite3.
+DATABASE_NAME = 'db/test.db'             # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
@@ -71,6 +71,13 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "signer.context_processors.currentpage",
+    )
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,7 +89,8 @@ INSTALLED_APPS = (
 
 # signer
 EMAIL_HOST = 'localhost'
-BASE_URL = 'localhost:8000/signer'
+BASE_URL = 'localhost:8000'
+DATE_FORMAT = "d. F Y" 
 
 try:
     from localsettings import *

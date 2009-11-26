@@ -2,7 +2,7 @@
 {% block title %}{{petition.title}}{% endblock %}
 
 {% block body %}
-
+<div id="content">
 <h2>Es gibt folgende Petitionen</h2>
 
 <ul>
@@ -10,6 +10,6 @@
 <li><a href="{{petition.get_absolute_url}}">{{petition.title}}</a></li>
 {% endfor %}
 </ul>
-
+</div>
 
 {% endblock %}

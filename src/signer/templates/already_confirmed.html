@@ -2,15 +2,17 @@
 
 {% block body %}
 
-<div class="flash notice">
+<div id="status" class="flash notice">
 <p class="message">  
 Hallo {{signature.name}} -
 der Bestätigungslink wurde bereits zuvor geklickt, deine Unterschrift ist also bereits gezählt.
 </p>
 </div>
 
+<div id="content">
 <p id="back">
 <a href="{{signature.petition.get_absolute_url}}">Zurück zur Petition {{signature.petition.title}}</a>
 </p>
+</div>
 
 {% endblock %}

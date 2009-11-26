@@ -3,15 +3,14 @@
 {% block body %}
 
 
-<div class="flash notice">
+<div id="status" class="flash notice">
 <p class="message">
 Hallo {{signature.name}} -
 Danke für die Teilnahme an der Petition {{signature.petition.title}}!
 </p>    
 </div>
 
-<p id="back">
+<p id="content">
 <a href="{{signature.petition.get_absolute_url}}">Zurück zur Petition {{signature.petition.title}}</a>
 </p>
-
 {% endblock %}

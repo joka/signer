@@ -5,19 +5,21 @@
 
 <div id="status" class="flash notice">
 <p class="message">
-Einladungs-Emails wurden versendet an
+Einladungs-Emails wurden versendet an (falls diese noch nicht an der Petition Teilgenommen haben):
 <ul>
     {% for email_address in recommend_receivers %}
     <li>{{email_address}}</li>
     {% endfor %}
 </ul>
 Vielen Dank! <br />
-<a href="{{signature.petition.get_absolute_url}}recommend/">Mehr Empfehlungen versenden</a><br />
-<a href="{{signature.petition.get_absolute_url}}">Zurück zur Petition {{signature.petition.title}}</a><br />
-</p>    
 </div>
 
 <p id="content">
-<a href="{{signature.petition.get_absolute_url}}">Zurück zur Petition {{signature.petition.title}}</a>
+Aktionen:
+<ul>
+    <li><a href="{{petition.get_absolute_url}}recommend/">Mehr Empfehlungen versenden</a></li>
+    <li><a href="{{petition.get_absolute_url}}">Zurück zur Petition {{signature.petition.title}}</a></li>
+</ul>
 </p>
+
 {% endblock %}

@@ -3,10 +3,11 @@
 from django import forms
 from django.forms.formsets import formset_factory
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from django.core.mail import send_mail
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.template import RequestContext
-from django.core.mail import send_mail
+from django.utils.http import urlencode
 from signer.models import Petition, Signature, AlreadyConfirmed
 
 
@@ -115,9 +116,10 @@ def confirm(request):
     else:
         signature.verified = True
         signature.save()
-        return render_to_response('thanks.html', {
-            'signature': signature,
-            }, context_instance=RequestContext(request))
+        return redirect('%srecommend/?%s' % (
+            signature.petition.get_absolute_url(),
+            urlencode({'name': signature.name, 'email_address': signature.email_address})
+            ))
 
 
 def list(request, petition_name):
@@ -129,7 +131,7 @@ def list(request, petition_name):
 
 class RecommendSenderForm(forms.Form):
     name = forms.CharField(max_length=100)
-    email_address = forms.EmailField()
+    email_address = forms.EmailField(required=False)
 
 class EmailForm(forms.Form):
     email_address = forms.EmailField()
@@ -141,6 +143,9 @@ RecommendReceiverFormSet = formset_factory(EmailForm, extra=settings.NR_RECOMMEN
 def recommend(request, petition_name):
     petition = get_object_or_404(Petition, short_name=petition_name)
 
+    signature_name = request.GET.get('name', '')
+    signature_email_address = request.GET.get('email_address', '')
+
     if request.method == 'POST':
 
         recommend_sender_form = RecommendSenderForm(request.POST, prefix='sender')
@@ -148,28 +153,38 @@ def recommend(request, petition_name):
 
         if recommend_sender_form.is_valid() and recommend_receiver_formset.is_valid():
 
-            #import ipdb; ipdb.set_trace()
+            sent_emails = []
 
             for form_dict in recommend_receiver_formset.cleaned_data:
                 
                 if form_dict=={}: continue
 
                 # TODO: sinnvolles subject, message
+                # TODO: Email nur versenden, wenn User noch nicht teilgenommen hat
                 send_mail('Weiterempfehlung der Petition %s'%petition.title, 
                     '%s fordert dich auf, auch an der Petition %s teilzunehmen:\n\n%s'%(recommend_sender_form.cleaned_data['name'], petition.title, petition.get_absolute_url()),
                     settings.DEFAULT_FROM_EMAIL,
                     [form_dict['email_address']])
 
+                sent_emails.append(form_dict['email_address'])
+
             return render_to_response('recommend_thanks.html', {
-                'recommend_receivers': [],
+                'recommend_receivers': sent_emails,
+                'petition': petition,
                 }, context_instance=RequestContext(request))
 
     else:
-        recommend_sender_form = RecommendSenderForm(prefix='sender')
+
+        recommend_sender_form = RecommendSenderForm(prefix='sender', initial={
+            'name': signature_name,
+            'email_address': signature_email_address,
+            })
         recommend_receiver_formset = RecommendReceiverFormSet(prefix='receiver')
 
     return render_to_response('recommend.html', {
         'petition': petition,
         'recommend_sender_form': recommend_sender_form,
         'recommend_receiver_formset': recommend_receiver_formset,
+        'signature_name': signature_name,
+        'signature_email_address': signature_email_address,
         }, context_instance=RequestContext(request))

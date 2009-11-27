@@ -3,16 +3,33 @@
 {% block body %}
 
 <div id="content">
+
+{% if signature_name and signature_email_address %}
+<div id="status" class="flash notice">
+<p class="message">
+Hallo {{signature.name}} -
+Danke für die Teilnahme an der Petition {{signature.petition.title}}!
+</p>    
+</div>
+{% endif %}
+
 <h2>Petition {{petition.title}} weiterempfehlen</h2>
 
 <p>Ich möchte die Petition an die Personen mit den folgenden Email-Adressen weiterempfehlen:</p>
 
 <form method='post' action='{{petition.get_absolute_url}}recommend/'>
-    {{recommend_sender_form.as_p}}
-    {% for form in recommend_receiver_formset.forms %}
-    {{form.as_p}}
-    {% endfor %}
-    <button value='send' type='submit'>Absenden</button>
+    <fieldset>
+        <legend>Absender</legend>
+        {{ recommend_sender_form.as_p }}
+    </fieldset>
+    <fieldset>
+        <legend>Empfänger</legend>
+        {{ recommend_receiver_formset.management_form.as_p }}
+        {% for form in recommend_receiver_formset.forms %}
+        {{ form.as_p }}
+        {% endfor %}
+        <button value='send' type='submit'>Absenden</button>
+    </fieldset>
 </form>
 
 <p>Es wird folgende Email versendet:</p>

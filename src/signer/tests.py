@@ -92,13 +92,14 @@ class SignerTest(RichTestCase):
         matches = self.assertEmail(recipients=[u'lara@example.com'], subject_snippets=[u'Bitte bestätige'], body_snippets=[u'Liebe/r Larissa'])
         link = self.get_confirmation_link(matches[-1].body)
 
-        response = self.c.get(link)
-        self.assertContains(response, u'Hallo Larissa Löwenzahn')
+        response = self.c.get(link, follow=True)
+        self.assertContains(response, u'Larissa Löwenzahn')
         self.assertContains(response, u'Danke für die Teilnahme')
+        self.assertContains(response, 'weiterempfehlen')
         
         self.assertEquals(self.pet.number_signatures(), 1)
 
-        response = self.c.get(link)
+        response = self.c.get(link, follow=True)
         self.assertContains(response, u'Hallo Larissa Löwenzahn')
         self.assertContains(response, u'Bestätigungslink wurde bereits zuvor geklickt')
 

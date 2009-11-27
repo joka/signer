@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from django.forms.formsets import formset_factory
 from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
@@ -89,24 +90,17 @@ def sign(request, petition_name):
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
                     [email_address])
 
-
             return render_to_response('confirm.html', {
                 'signature': signature,
-                }, context_instance=RequestContext(request))
-
-        else: # invalid form
-            return render_to_response('sign.html', {
-                'petition': petition,
-                'form': form,
                 }, context_instance=RequestContext(request))
 
     else:
         form = SignatureForm()
 
-        return render_to_response('sign.html', {
-            'petition': petition,
-            'form': form,
-            }, context_instance=RequestContext(request))
+    return render_to_response('sign.html', {
+        'petition': petition,
+        'form': form,
+        }, context_instance=RequestContext(request))
 
 
 def confirm(request):
@@ -130,4 +124,52 @@ def list(request, petition_name):
     petition = get_object_or_404(Petition, short_name=petition_name)
     return render_to_response('list.html', {
         'petition': petition
+        }, context_instance=RequestContext(request))
+
+
+class RecommendSenderForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email_address = forms.EmailField()
+
+class EmailForm(forms.Form):
+    email_address = forms.EmailField()
+
+
+RecommendReceiverFormSet = formset_factory(EmailForm, extra=settings.NR_RECOMMEND_EMAIL_FIELDS)
+
+
+def recommend(request, petition_name):
+    petition = get_object_or_404(Petition, short_name=petition_name)
+
+    if request.method == 'POST':
+
+        recommend_sender_form = RecommendSenderForm(request.POST, prefix='sender')
+        recommend_receiver_formset = RecommendReceiverFormSet(request.POST, prefix='receiver')
+
+        if recommend_sender_form.is_valid() and recommend_receiver_formset.is_valid():
+
+            #import ipdb; ipdb.set_trace()
+
+            for form_dict in recommend_receiver_formset.cleaned_data:
+                
+                if form_dict=={}: continue
+
+                # TODO: sinnvolles subject, message
+                send_mail('Weiterempfehlung der Petition %s'%petition.title, 
+                    '%s fordert dich auf, auch an der Petition %s teilzunehmen:\n\n%s'%(recommend_sender_form.cleaned_data['name'], petition.title, petition.get_absolute_url()),
+                    settings.DEFAULT_FROM_EMAIL,
+                    [form_dict['email_address']])
+
+            return render_to_response('recommend_thanks.html', {
+                'recommend_receivers': [],
+                }, context_instance=RequestContext(request))
+
+    else:
+        recommend_sender_form = RecommendSenderForm(prefix='sender')
+        recommend_receiver_formset = RecommendReceiverFormSet(prefix='receiver')
+
+    return render_to_response('recommend.html', {
+        'petition': petition,
+        'recommend_sender_form': recommend_sender_form,
+        'recommend_receiver_formset': recommend_receiver_formset,
         }, context_instance=RequestContext(request))

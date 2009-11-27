@@ -91,6 +91,7 @@ INSTALLED_APPS = (
 EMAIL_HOST = 'localhost'
 BASE_URL = 'localhost:8000'
 DATE_FORMAT = "d. F Y" 
+NR_RECOMMEND_EMAIL_FIELDS = 5
 
 try:
     from localsettings import *

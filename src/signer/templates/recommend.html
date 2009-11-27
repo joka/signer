@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div id="content">
+<h2>Petition {{petition.title}} weiterempfehlen</h2>
+
+<p>Ich möchte die Petition an die Personen mit den folgenden Email-Adressen weiterempfehlen:</p>
+
+<form method='post' action='{{petition.get_absolute_url}}recommend/'>
+    {{recommend_sender_form.as_p}}
+    {% for form in recommend_receiver_formset.forms %}
+    {{form.as_p}}
+    {% endfor %}
+    <button value='send' type='submit'>Absenden</button>
+</form>
+
+<p>Es wird folgende Email versendet:</p>
+<pre>...</pre>
+
+<p>Es wird keine Email versendet, wenn die Person bereits an der Petition teilgenommen hat</p>
+
+
+
+</div>
+{% endblock %}
+

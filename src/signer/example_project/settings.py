@@ -1,7 +1,7 @@
 # Django settings for signer example project.
 
-DEBUG = False
-TEMPLATE_DEBUG = DEBUG
+DEBUG = True
+TEMPLATE_DEBUG = True
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -10,7 +10,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'db/test.db'             # Or path to database file if using sqlite3.
+DATABASE_NAME = 'src/signer/example_project/db/test.db' # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
@@ -92,6 +92,7 @@ EMAIL_HOST = 'localhost'
 BASE_URL = 'localhost:8000'
 DATE_FORMAT = "d. F Y" 
 NR_RECOMMEND_EMAIL_FIELDS = 5
+
 
 try:
     from localsettings import *

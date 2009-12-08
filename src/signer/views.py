@@ -33,8 +33,9 @@ def show_petition_list(request):
 
 def show(request, petition_name):
     petition = get_object_or_404(Petition, short_name=petition_name)
+    show_actions = request.GET.get('show_actions', True)
     return render_to_response('show.html', {
-        'petition': petition,
+        'petition' : petition, 'show_actions' : show_actions,
         }, context_instance=RequestContext(request))
 
 

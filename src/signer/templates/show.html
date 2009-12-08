@@ -10,12 +10,15 @@
 Anzahl Unterschriften: {{petition.number_signatures}}
 </p>
 
+
+{% if show_actions %}
 Aktionen
 <ul>
-    <li><a href="{{petition.get_absolute_url}}sign/">Ja - ich unterschreibe!</a></li>
-    <li><a href="{{petition.get_absolute_url}}list/">Unterschriften anschauen</a></li>
-    <li><a href="{{petition.get_absolute_url}}recommend/">Petition weiterempfehlen</a></li>
+    <li><a href="sign/">Ja - ich unterschreibe!</a></li>
+    <li><a href="list/">Unterschriften anschauen</a></li>
+    <li><a href="recommend/">Petition weiterempfehlen</a></li>
 </ul>
+{% endif %}
 
 <h2>Petitionstext</h2>
 <p>

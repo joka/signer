@@ -97,7 +97,9 @@ def sign(request, petition_name):
                 }, context_instance=RequestContext(request))
 
     else:
-        form = SignatureForm()
+        name = request.GET.get('name', '')  
+        #todo: handle facebook_id get parameter
+        form = SignatureForm(initial={'name': name})
 
     return render_to_response('sign.html', {
         'petition': petition,

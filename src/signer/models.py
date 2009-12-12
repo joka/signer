@@ -58,6 +58,7 @@ class Signature(models.Model):
     petition = models.ForeignKey('Petition', editable=False, related_name='all_signatures')
     confirmation_code = models.CharField(editable=False, null=True, unique=True, max_length=32)
     verified = models.BooleanField(editable=False, default=False)
+    facebook_id = models.CharField(null=True, blank=True, max_length=32)
 
     @classmethod
     def create_confirm_code(cls, email_address):

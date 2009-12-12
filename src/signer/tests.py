@@ -86,6 +86,7 @@ class SignerTest(RichTestCase):
         response = self.c.post(reverse('signer.views.sign', kwargs={'petition_name': PETITION['short_name']}), {
             'name': u'Larissa Löwenzahn',
             'email_address': u'lara@example.com',
+            'facebook_id': u'1231232131',
             })
         self.assertContains(response, 'Du hast eine Mail bekommen')
         self.assertEquals(len(mail.outbox), nr_emails_before + 1)

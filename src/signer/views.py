@@ -9,7 +9,10 @@ from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.http import urlencode
 from signer.models import Petition, Signature, AlreadyConfirmed
-
+try:
+    from signer_facebook import Signature_Facebook, Petition_Name
+except ImportError:
+    pass 
 
 class SignatureForm(forms.ModelForm):
 
@@ -50,6 +53,7 @@ def sign(request, petition_name):
 
         if form.is_valid():
             email_address = form.cleaned_data['email_address']
+            facebook_id = form.cleaned_data['facebook_id']
 
             try:
                 signature = Signature.objects.get(petition=petition, email_address=email_address)
@@ -68,10 +72,8 @@ def sign(request, petition_name):
 
                 # generate confirmation code
                 confirmation_code = Signature.create_confirm_code(email_address)
-                signature = Signature(confirmation_code=confirmation_code, petition=petition)
-
+                signature = Signature(confirmation_code=confirmation_code, petition=petition, facebook_id=facebook_id)
                 email_type = EMAIL_TYPES['NOT_YET_SIGNED']
-            
                 # send email: again
                 # send email: first time
 
@@ -98,9 +100,12 @@ def sign(request, petition_name):
 
     else:
         name = request.GET.get('name', '')  
-        #todo: handle facebook_id get parameter
-        form = SignatureForm(initial={'name': name})
-
+        facebook_id = request.GET.get('facebook_id', '')  
+        
+        form = SignatureForm(initial={'name': name, 'facebook_id':  facebook_id})
+        #hide facebook_id, this is only to track the facebook app
+        form.fields['facebook_id'].widget = forms.HiddenInput()
+        
     return render_to_response('sign.html', {
         'petition': petition,
         'form': form,
@@ -113,12 +118,25 @@ def confirm(request):
     signature = get_object_or_404(Signature, confirmation_code=confirmation_code)
 
     if signature.verified:
+        
+      
+        
         return render_to_response('already_confirmed.html', {
             'signature': signature,
             }, context_instance=RequestContext(request))
     else:
         signature.verified = True
         signature.save()
+        
+        #if signer_facebook is installed, let the facebook app know
+        if 'signer_facebook' in settings.INSTALLED_APPS:
+
+            sf = Signature_Facebook(facebook_id = fb.uid)
+            pet = Petition_Name(petition_name=petition_name)
+            pet.save()
+            sf.petitions.add(pet)
+            sf.save()  
+            
         return redirect('%srecommend/?%s' % (
             signature.petition.get_absolute_url(),
             urlencode({'name': signature.name, 'email_address': signature.email_address})

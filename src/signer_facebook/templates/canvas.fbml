@@ -1,0 +1,31 @@
+<fb:header>
+  Bildungsstreik - Petitionen
+</fb:header>
+
+
+<div class="clearfix" style="float: left; border: 1px #d8dfea solid; margin-bottom: 30px; width:740px;">
+<h2>Meine Petitionen:</h2>
+<br />
+{% if mypetitions %}
+<ul>
+{% for petition in petitions %}
+<li><a href="{{fb_url}}viewpetition/{{petition.short_name}}/">{{petition.title}}</a>   
+<br />{{petition.abstract}}
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+</div> 
+
+
+<div class="clearfix" style="float: left; border: 1px #d8dfea solid; margin-bottom: 30px; width:740px;">
+<h2>Alle Petitionen:</h2>
+<br />
+<ul>
+{% for petition in petitions %}
+<li><a href="{{fb_url}}viewpetition/{{petition.short_name}}/">{{petition.title}}</a>   
+<br />{{petition.abstract}}
+</li>
+{% endfor %}
+</ul>
+</div>

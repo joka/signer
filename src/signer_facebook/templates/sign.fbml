@@ -1,0 +1,16 @@
+
+{% extends "base.fbml" %}
+{% block body %} 
+
+
+<script> 
+<!-- 
+
+var attachment = {'name':'{{petition_title}}','href':'{{fb_url_pet}}','description':'Link zur Petition {{petition_title}}'}
+Facebook.streamPublish('Unterstützt die Bildungsstreikpetition {{petition_title}}.', attachment, null, null, 'Info für Deine Pinnwand:', null);
+//--> 
+</script> 
+
+<fb:iframe width="740" height="800" src="{{iframe_url}}"  />
+
+{% endblock %} 

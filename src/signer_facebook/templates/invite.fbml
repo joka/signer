@@ -1,0 +1,12 @@
+{% extends "base.fbml" %}
+
+{% block body %} 
+
+<fb:request-form action="" method="POST" invite="true" type="{{app_name}}" 
+   content="{{ content }}"> 
+        <fb:multi-friend-selector max="20" actiontext="Folgende Freunde  habe die Petition {{petition_title}}  nicht unterzeichnet.
+        Lade sie ein mitzumachen!" showborder="true" rows="5" exclude_ids="{{ exclude_ids }}"> 
+</fb:request-form>  
+
+
+{% endblock %} 

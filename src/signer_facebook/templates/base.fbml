@@ -1,0 +1,20 @@
+<fb:header>
+ <a href="{{fb_url}}"> Bildungsstreik - Petitionen</a>
+</fb:header>
+
+<div class="clearfix" style="float: left; border: 1px #d8dfea solid; margin-bottom: 30px; width:740px;">
+<p style="font-weight:bold; padding: 10px 10px 10px 10px;">
+   {% if signed %}
+     <span>Ich habe unterzeichnet</span> 
+   {% else %}
+     <a href="{{fb_url_pet}}sign/">Ich unterzeichne!</a> 
+   {% endif %}
+    - <a href="{{fb_url_pet}}invite/">Petition weiterempfehlen</a> 
+    - <a href="{{fb_url_pet}}signatures/"> Unterschriften ansehen</a>
+    - <a href="{{fb_url_pet}}">Anzeigen</a> 
+    
+</p>
+</div>  
+
+        {% block body %}{% endblock %}
+ 

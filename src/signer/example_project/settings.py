@@ -85,6 +85,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'signer',
+    'signer_facebook',
 )
 
 # signer
@@ -93,6 +94,10 @@ BASE_URL = 'localhost:8000'
 DATE_FORMAT = "d. F Y" 
 NR_RECOMMEND_EMAIL_FIELDS = 5
 
+#signer_facebook
+FACEBOOK_API_KEY = ''
+FACEBOOK_SECRET_KEY = ''
+FACEBOOK_APP_NAME = '' 
 
 try:
     from localsettings import *

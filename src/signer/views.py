@@ -18,6 +18,7 @@ class SignatureForm(forms.ModelForm):
 
     class Meta:
         model = Signature
+        exclude = ('newsletter')
 
 
 EMAIL_TYPES = dict(

@@ -28,6 +28,17 @@ class Petition(models.Model):
 
     def get_absolute_url(self):
         return 'http://%s/%s/'%(settings.BASE_URL, self.short_name)
+    
+    def get_purge_urls(self):
+        """This is for the django_cachepurge middleware"""
+        urls = []
+        urls += self.get_absolute_url()
+        urls += "%srecommend/" % (self.get_absolute_url())
+        urls += 'http://%s/'%(settings.BASE_URL)
+        # this is for signer_facebook
+        urls += 'http://%s/canvas/'%(settings.BASE_URL)
+        urls += 'http://%s/canvas/viewpetition/%s/'%(settings.BASE_URL, self.short_name) 
+        return urls
 
     def get_signatures(self):
         return self.all_signatures.filter(verified=True)

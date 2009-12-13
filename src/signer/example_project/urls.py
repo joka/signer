@@ -16,7 +16,6 @@ urlpatterns = patterns('',
 # singer pyfacebook example
 from signer_facebook.urls import urlpatterns as signer_facebook_urlpatterns
 urlpatterns += signer_facebook_urlpatterns
-#urlpatterns +=    (r'^facebook/', include('signer.pyfacebook_sample.urls')) 
 
 # signer example
 from signer.urls import urlpatterns as signer_urlpatterns

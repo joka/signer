@@ -11,6 +11,6 @@ Facebook.streamPublish('Unterstützt die Bildungsstreikpetition {{petition_title
 //--> 
 </script> 
 
-<fb:iframe width="740" height="800" src="{{iframe_url}}"  />
+<fb:iframe  include_fb_sig="false" width="740" height="800" src="{{iframe_url}}"  />
 
 {% endblock %} 

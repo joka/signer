@@ -5,7 +5,7 @@
 <div id="content">
 <h2>Es gibt folgende Petitionen</h2>
 
-<ul>
+<ul id="petitionlist">
 {% for petition in petitions %}
 <li><a href="{{petition.get_absolute_url}}">{{petition.title}}</a></li>
 {% endfor %}

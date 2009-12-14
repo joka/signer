@@ -11,9 +11,9 @@
 {% if show_actions %}
 Aktionen
 <ul>
-    <li><a href="sign/">Ja - ich unterschreibe!</a></li>
-    <li><a href="list/">Unterschriften anschauen</a></li>
-    <li><a href="recommend/">Petition weiterempfehlen</a></li>
+    <li><a href="{{petition.get_absolute_url}}sign/">Ja - ich unterschreibe!</a></li>
+    <li><a href="{{petition.get_absolute_url}}list/">Unterschriften anschauen</a></li>
+    <li><a href="{{petition.get_absolute_url}}recommend/">Petition weiterempfehlen</a></li>
 </ul>
 {% endif %}
 
@@ -24,17 +24,18 @@ Aktionen
 </div>
 
     <div id="metainfos">
-      <dl>
+      <h3>Infos</h3>
+      <ul class="meta"> 
         {% if petition.start_date %}
-        <dt>Startdatum:</dt><dd>{{petition.start_date|date}}</dd>
+        <li>Startdatum: {{petition.start_date|date}}</li>
         {% endif %}
         {% if petition.end_date %}
-        <dt>Enddatum:</dt><dd>{{petition.end_date|date}}</dd>
+        <li>Enddatum: {{petition.end_date|date}}</li>
         {% endif %}
         {% if petition.datenschutz %}
-        <dt>Datenschutzbedingungen:<dt/><dd>{{petition.datenschutz}}</dd>
+        <li>{{petition.datenschutz}}</li> 
         {% endif %}
-      </dl>   
+      </ul>   
     </div>
 
 

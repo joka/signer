@@ -16,18 +16,27 @@ Anzahl Unterschriften: {{petition.number_signatures}}
 <h2>Petitionstext</h2>
 {{petition.text|safe}}
          
-        <div id="metainfos">
-          <dl>
-            {% if petition.start_date %}
-            <dt>Startdatum:</dt><dd>{{petition.start_date|date}}</dd>
-            {% endif %}
-            {% if petition.end_date %}
-            <dt>Enddatum:</dt><dd>{{petition.end_date|date}}</dd>
-            {% endif %}
-            {% if petition.datenschutz %}
-            <dt>Datenschutzbedingungen:<dt/><dd>{{petition.datenschutz}}</dd>
-            {% endif %}
-          </dl>
-        </div> 
+
+</div>
+
+
+     <div id="metainfos">
+      <h3>Infos</h3>
+      <ul class="meta"> 
+        {% if petition.start_date %}
+        <li>Startdatum: {{petition.start_date|date}}</li>
+        {% endif %}
+        {% if petition.end_date %}
+        <li>Enddatum: {{petition.end_date|date}}</li>
+        {% endif %}
+        {% if petition.datenschutz %}
+        <li>{{petition.datenschutz}}</li> 
+        {% endif %}
+      </ul>   
     </div>
+ 
+
+
+
 {% endblock %}
+

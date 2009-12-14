@@ -36,16 +36,21 @@ import signer_facebook.decorators as signer_facebook
 
 #view methods:
 
-@decorator_from_middleware(FacebookMiddleware)
-@facebook.require_login()
+#@decorator_from_middleware(FacebookMiddleware)
+#@facebook.require_login()
 def canvas(request):
+
+    #fb_uid = request.facebook.uid
+    fb_uid = '0'
+    sf = Signature_Facebook(facebook_id = fb_uid)
+
+    vars = {}
+    vars['petitions'] = Petition.objects.all()
+    vars['mypetitions'] = sf.petitions.all() 
+    #vars['fb_url'] = request.facebook.get_app_url()  
+    vars['fb_url'] = 'dd'
     
-    sf = Signature_Facebook(facebook_id = request.facebook.uid)
-    
-    return render_to_response('canvas.fbml', {'petitions': Petition.objects.all(),
-                                              'mypetitions': sf.petitions.all(), 
-                                              'fb_url': request.facebook.get_app_url(),}, 
-                                             context_instance=RequestContext(request))
+    return render_to_response('canvas.fbml', vars, context_instance=RequestContext(request))
 
 
 @decorator_from_middleware(FacebookMiddleware)

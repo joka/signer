@@ -86,6 +86,7 @@ def sign(request, petition_name):
 
 
             form = SignatureForm(request.POST, instance=signature)
+            form.fields['facebook_id'].widget = forms.HiddenInput()
             form.save()
 
             subject = render_to_string('email_confirmation_subject.txt', context)

@@ -34,10 +34,10 @@ class Petition(models.Model):
         urls = []
         urls += self.get_absolute_url()
         urls += "%srecommend/" % (self.get_absolute_url())
-        urls += 'http://%s/'%(settings.BASE_URL)
+        urls += 'http://%s/' % (settings.BASE_URL)
         # this is for signer_facebook
-        urls += 'http://%s/canvas/'%(settings.BASE_URL)
-        urls += 'http://%s/canvas/viewpetition/%s/'%(settings.BASE_URL, self.short_name) 
+        urls += 'http://%s/canvas/' % (settings.BASE_URL)
+        urls += 'http://%s/canvas/viewpetition/%s/' % (settings.BASE_URL, self.short_name) 
         return urls
 
     def get_signatures(self):

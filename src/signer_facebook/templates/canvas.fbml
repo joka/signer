@@ -1,3 +1,6 @@
+
+<div>
+
 <fb:header>
   Bildungsstreik - Petitionen
 </fb:header>
@@ -8,7 +11,7 @@
 <br />
 {% if mypetitions %}
 <ul>
-{% for petition in petitions %}
+{% for petition in mypetitions %}
 <li><a href="{{fb_url}}viewpetition/{{petition.short_name}}/">{{petition.title}}</a>   
 <br />{{petition.abstract}}
 </li>
@@ -28,4 +31,6 @@
 </li>
 {% endfor %}
 </ul>
+</div>
+
 </div>

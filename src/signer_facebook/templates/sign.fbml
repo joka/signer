@@ -3,6 +3,8 @@
 {% block body %} 
 
 
+
+{% if not signed %}
 <script> 
 <!-- 
 
@@ -10,6 +12,7 @@ var attachment = {'name':'{{petition_title}}','href':'{{fb_url_pet}}','descripti
 Facebook.streamPublish('Unterstützt die Bildungsstreikpetition {{petition_title}}.', attachment, null, null, 'Info für Deine Pinnwand:', null);
 //--> 
 </script> 
+{% endif %}
 
 <fb:iframe  include_fb_sig="false" width="740" height="800" src="{{iframe_url}}"  />
 

@@ -9,10 +9,7 @@ from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.http import urlencode
 from signer.models import Petition, Signature, AlreadyConfirmed
-try:
-    from signer_facebook import Signature_Facebook, Petition_Name
-except ImportError:
-    pass 
+from signer_facebook.models import Signature_Facebook, Petition_Name
 
 class SignatureForm(forms.ModelForm):
 
@@ -121,8 +118,6 @@ def confirm(request):
 
     if signature.verified:
         
-      
-        
         return render_to_response('already_confirmed.html', {
             'signature': signature,
             }, context_instance=RequestContext(request))
@@ -131,9 +126,10 @@ def confirm(request):
         signature.save()
         
         #if signer_facebook is installed, let the facebook app know
-        if 'signer_facebook' in settings.INSTALLED_APPS:
-
-            sf = Signature_Facebook(facebook_id = fb.uid)
+        fbuid = signature.facebook_id 
+        petition_name = signature.petition.short_name
+        if 'signer_facebook' in settings.INSTALLED_APPS and fbuid:
+            sf = Signature_Facebook(facebook_id=fbuid)
             pet = Petition_Name(petition_name=petition_name)
             pet.save()
             sf.petitions.add(pet)
@@ -184,8 +180,8 @@ def recommend(request, petition_name):
 
                 # TODO: sinnvolles subject, message
                 # TODO: Email nur versenden, wenn User noch nicht teilgenommen hat
-                send_mail('Weiterempfehlung der Petition %s'%petition.title, 
-                    '%s fordert dich auf, auch an der Petition %s teilzunehmen:\n\n%s'%(recommend_sender_form.cleaned_data['name'], petition.title, petition.get_absolute_url()),
+                send_mail('Weiterempfehlung der Bildungsstreikpetition %s'%petition.title, 
+                    '%s möchte Dich einladen, auch an der Petition %s teilzunehmen:\n\n%s'%(recommend_sender_form.cleaned_data['name'], petition.title, petition.get_absolute_url()),
                     settings.DEFAULT_FROM_EMAIL,
                     [form_dict['email_address']])
 

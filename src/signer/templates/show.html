@@ -23,20 +23,6 @@ Aktionen
 </p>
 </div>
 
-    <div id="metainfos">
-      <h3>Infos</h3>
-      <ul class="meta"> 
-        {% if petition.start_date %}
-        <li>Startdatum: {{petition.start_date|date}}</li>
-        {% endif %}
-        {% if petition.end_date %}
-        <li>Enddatum: {{petition.end_date|date}}</li>
-        {% endif %}
-        {% if petition.datenschutz %}
-        <li>{{petition.datenschutz}}</li> 
-        {% endif %}
-      </ul>   
-    </div>
 
 
 {% endblock %}

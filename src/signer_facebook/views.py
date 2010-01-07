@@ -22,18 +22,6 @@ from signer_facebook.models import Petition_Name, Signature_Facebook
 import signer_facebook.decorators as signer_facebook
 
 
-#cached outsourced methods 
-
-#def get_petition_title(petition_short_name):
-    
-#    petition = get_object_or_404(Petition, short_name=petition_name)
-
-
-#def get_petition_absolute_url(petition_short_name):
-
-#    petition = get_object_or_404(Petition, short_name=petition_name)
-
-
 #view methods:
 
 @decorator_from_middleware(FacebookMiddleware)

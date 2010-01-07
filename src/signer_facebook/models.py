@@ -25,8 +25,8 @@ class Signature_Facebook(models.Model):
         """This is for the django_cachepurge middleware"""
         urls = []
         urls += 'http://%s/canvas/' % (settings.BASE_URL)
-        urls += 'http://%s/canvas/viewpetition/%s/' % (settings.BASE_URL, self.short_name) 
-        urls += 'http://%s/canvas/viewpetition/%s/sign/i' % (settings.BASE_URL, self.short_name) 
+        #urls += 'http://%s/canvas/viewpetition/%s/' % (settings.BASE_URL, self.short_name) 
+        #urls += 'http://%s/canvas/viewpetition/%s/sign/' % (settings.BASE_URL, self.short_name) 
         return urls 
 
     #facebook id user

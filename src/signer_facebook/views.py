@@ -36,19 +36,17 @@ import signer_facebook.decorators as signer_facebook
 
 #view methods:
 
-#@decorator_from_middleware(FacebookMiddleware)
-#@facebook.require_login()
+@decorator_from_middleware(FacebookMiddleware)
+@facebook.require_login()
 def canvas(request):
 
-    #fb_uid = request.facebook.uid
-    fb_uid = '0'
+    fb_uid = request.facebook.uid
     sf = Signature_Facebook(facebook_id = fb_uid)
 
     vars = {}
     vars['petitions'] = Petition.objects.all()
     vars['mypetitions'] = sf.petitions.all() 
-    #vars['fb_url'] = request.facebook.get_app_url()  
-    vars['fb_url'] = 'dd'
+    vars['fb_url'] = request.facebook.get_app_url()  
     
     return render_to_response('canvas.fbml', vars, context_instance=RequestContext(request))
 
@@ -87,13 +85,6 @@ def signpetition(request, petition_name):
     vars['iframe_url'] ="%ssign/?%s" % (petition.get_absolute_url(), url_params) 
     vars['fb_url'] = fb.get_app_url()   
     vars['fb_url_pet'] = "%sviewpetition/%s/"  % (vars['fb_url'], petition_name)  
-    
-    #save that the facebook user has signed 
-    #todo: this is not nice, the facebook user want to sign, but he did not yet
-    pet = Petition_Name(petition_name=petition_name)
-    pet.save()
-    sf.petitions.add(pet)
-    sf.save()
     
     return render_to_response('sign.fbml', vars)
  

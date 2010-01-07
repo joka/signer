@@ -9,10 +9,7 @@ from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.http import urlencode
 from signer.models import Petition, Signature, AlreadyConfirmed
-try:
-    from signer_facebook import Signature_Facebook, Petition_Name
-except ImportError:
-    pass 
+from signer_facebook.models import Signature_Facebook, Petition_Name
 
 class SignatureForm(forms.ModelForm):
 
@@ -116,6 +113,7 @@ def sign(request, petition_name):
 def confirm(request):
 
     confirmation_code = request.GET['code']
+    facebook_id = request.GET.get('fbuid', '') 
     signature = get_object_or_404(Signature, confirmation_code=confirmation_code)
 
     if signature.verified:
@@ -130,9 +128,8 @@ def confirm(request):
         signature.save()
         
         #if signer_facebook is installed, let the facebook app know
-        if 'signer_facebook' in settings.INSTALLED_APPS:
-
-            sf = Signature_Facebook(facebook_id = fb.uid)
+        if 'signer_facebook' in settings.INSTALLED_APPS and facebook_id:
+            sf = Signature_Facebook(facebook_id=facebook_id)
             pet = Petition_Name(petition_name=petition_name)
             pet.save()
             sf.petitions.add(pet)

@@ -1,9 +1,19 @@
 {% extends "base.html" %}
 {% block title %}{{petition.title}}{% endblock %}
 
+
+
+
 {% block body %}
 <div id="content">
-<h2>Es gibt folgende Petitionen</h2>
+    <div id="content">
+    <p> Dies ist eine Seite für Onlineunterschriften/Petitionen im Rahmen des Bildungssteiks.
+    Wenn Ihr selbst eine starten wollt, Feedback oder Änderungswünsche habt, sagt uns bitte Bescheid, Näheres <a href="http://www.bildungsstreik-berlin.de/wiki/index.php/OnlinePetition">im WIKI</a>. <br />
+    Zusätzlich gibt es eine <a href="http://apps.facebook.com/petitionen/">facebook application</a>im Teststadium.<br />
+    Alle Emailadressen werden validiert und haben somit ein ähnliches Gewicht wie "echte" Unterschriften.
+    </p>
+
+<h2>Es gibt folgende Testpetitionen</h2>
 
 <ul id="petitionlist">
 {% for petition in petitions %}

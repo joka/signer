@@ -140,6 +140,10 @@ def confirm(request):
             urlencode({'name': signature.name, 'email_address': signature.email_address})
             ))
 
+def contact(request):      
+                           
+    return render_to_response('contact.html', {})
+
 
 def list(request, petition_name):
     petition = get_object_or_404(Petition, short_name=petition_name)

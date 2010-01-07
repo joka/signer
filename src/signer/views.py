@@ -179,8 +179,8 @@ def recommend(request, petition_name):
 
                 # TODO: sinnvolles subject, message
                 # TODO: Email nur versenden, wenn User noch nicht teilgenommen hat
-                send_mail('Weiterempfehlung der Petition %s'%petition.title, 
-                    '%s fordert dich auf, auch an der Petition %s teilzunehmen:\n\n%s'%(recommend_sender_form.cleaned_data['name'], petition.title, petition.get_absolute_url()),
+                send_mail('Weiterempfehlung der Bildungsstreikpetition %s'%petition.title, 
+                    '%s möchte Dich einladen, auch an der Petition %s teilzunehmen:\n\n%s'%(recommend_sender_form.cleaned_data['name'], petition.title, petition.get_absolute_url()),
                     settings.DEFAULT_FROM_EMAIL,
                     [form_dict['email_address']])
 

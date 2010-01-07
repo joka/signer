@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_show_sign.html" %}
 {% block title %}{{petition.title}}{% endblock %}
 
 {% block body %}
@@ -6,10 +6,7 @@
 <h1>{{petition.title}}</h1>
 
 
-
-
 {% if show_actions %}
-Aktionen
 <ul>
     <li><a href="sign/">Ja - ich unterschreibe!</a></li>
     <li><a href="list/">Unterschriften anschauen</a></li>
@@ -22,20 +19,4 @@ Aktionen
 {{petition.text|safe}}
 </p>
 </div>
-
-    <div id="metainfos">
-      <dl>
-        {% if petition.start_date %}
-        <dt>Startdatum:</dt><dd>{{petition.start_date|date}}</dd>
-        {% endif %}
-        {% if petition.end_date %}
-        <dt>Enddatum:</dt><dd>{{petition.end_date|date}}</dd>
-        {% endif %}
-        {% if petition.datenschutz %}
-        <dt>Datenschutzbedingungen:<dt/><dd>{{petition.datenschutz}}</dd>
-        {% endif %}
-      </dl>   
-    </div>
-
-
 {% endblock %}

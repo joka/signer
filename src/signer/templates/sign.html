@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_show_sign.html" %}
 {% block title %}{{petition.title}}{% endblock %}
 
 {% block body %}
@@ -15,19 +15,4 @@ Anzahl Unterschriften: {{petition.number_signatures}}
 
 <h2>Petitionstext</h2>
 {{petition.text|safe}}
-         
-        <div id="metainfos">
-          <dl>
-            {% if petition.start_date %}
-            <dt>Startdatum:</dt><dd>{{petition.start_date|date}}</dd>
-            {% endif %}
-            {% if petition.end_date %}
-            <dt>Enddatum:</dt><dd>{{petition.end_date|date}}</dd>
-            {% endif %}
-            {% if petition.datenschutz %}
-            <dt>Datenschutzbedingungen:<dt/><dd>{{petition.datenschutz}}</dd>
-            {% endif %}
-          </dl>
-        </div> 
-    </div>
 {% endblock %}

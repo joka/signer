@@ -113,12 +113,9 @@ def sign(request, petition_name):
 def confirm(request):
 
     confirmation_code = request.GET['code']
-    facebook_id = request.GET.get('fbuid', '') 
     signature = get_object_or_404(Signature, confirmation_code=confirmation_code)
 
     if signature.verified:
-        
-      
         
         return render_to_response('already_confirmed.html', {
             'signature': signature,
@@ -128,8 +125,10 @@ def confirm(request):
         signature.save()
         
         #if signer_facebook is installed, let the facebook app know
-        if 'signer_facebook' in settings.INSTALLED_APPS and facebook_id:
-            sf = Signature_Facebook(facebook_id=facebook_id)
+        fbuid = signature.facebook_id 
+        petition_name = signature.petition.short_name
+        if 'signer_facebook' in settings.INSTALLED_APPS and fbuid:
+            sf = Signature_Facebook(facebook_id=fbuid)
             pet = Petition_Name(petition_name=petition_name)
             pet.save()
             sf.petitions.add(pet)

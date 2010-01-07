@@ -22,18 +22,6 @@ from signer_facebook.models import Petition_Name, Signature_Facebook
 import signer_facebook.decorators as signer_facebook
 
 
-#cached outsourced methods 
-
-#def get_petition_title(petition_short_name):
-    
-#    petition = get_object_or_404(Petition, short_name=petition_name)
-
-
-#def get_petition_absolute_url(petition_short_name):
-
-#    petition = get_object_or_404(Petition, short_name=petition_name)
-
-
 #view methods:
 
 @decorator_from_middleware(FacebookMiddleware)
@@ -82,13 +70,6 @@ def signpetition(request, petition_name):
     vars['iframe_url'] ="%ssign/?%s" % (petition.get_absolute_url(), url_params) 
     vars['fb_url'] = fb.get_app_url()   
     vars['fb_url_pet'] = "%sviewpetition/%s/"  % (vars['fb_url'], petition_name)  
-    
-    #save that the facebook user has signed 
-    #todo: this is not nice, the facebook user want to sign, but he did not yet
-    pet = Petition_Name(petition_name=petition_name)
-    pet.save()
-    sf.petitions.add(pet)
-    sf.save()
     
     return render_to_response('sign.fbml', vars)
  
